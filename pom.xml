@@ -5,7 +5,7 @@
 
   <groupId>cloud.solarwindscloud</groupId>
   <artifactId>apm-proto</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -123,7 +123,7 @@
   <scm>
     <connection>scm:git:https://github.com/solarwindscloud/apm-proto</connection>
     <developerConnection>scm:git:https://github.com/solarwindscloud/apm-proto</developerConnection>
-    <tag>HEAD</tag>
+    <tag>apm-proto-1.0.0</tag>
   </scm>
 
 </project>
