@@ -1,0 +1,183 @@
+/**
+ * This file defines the RPC between APM libraries and the collector
+ */
+syntax = "proto3";
+
+package collector;
+option go_package="./collectorpb";
+option java_package = "com.solarwinds.trace.ingestion.proto";
+
+/**
+ * Represents the result code from collector
+ */
+enum ResultCode {
+  OK = 0;		           // means OK
+  TRY_LATER = 1;       // APM library will retry the request later
+  INVALID_API_KEY = 2; // obsolete, removed handling in this [PR](https://github.com/librato/oboe/pull/720)
+  LIMIT_EXCEEDED = 3;	 // APM library will retry the request later
+  REDIRECT = 4;		     // obsolete, removed handling in this [PR](https://github.com/librato/oboe/pull/720)
+}
+
+/**
+ * Represents the encoding type of messages
+ */
+enum EncodingType {
+  BSON = 0;     // binary JSON
+  PROTOBUF = 1;	// obsolete
+}
+
+/**
+ * Represents the host type the APM library is running in.
+ */
+enum HostType {
+  PERSISTENT = 0;	// persistent host type
+  AWS_LAMBDA = 1;	// [ao-only] AWS Lambda function
+}
+
+/**
+ * Represents AWS metadata from [Instance Metadata Service IMDS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html)
+ */
+message Aws {
+  string cloudProvider = 1;         // always `aws`
+  string cloudPlatform = 2;         // always `aws_ec2`
+  string cloudAccountId = 3;        // `accountId` in IMDS metadata
+  string cloudRegion = 4;           // `region` in IMDS metadata
+  string cloudAvailabilityZone = 5; // `availabilityZone` in IMDS metadata
+  string hostId = 6;                // `instanceId` in IMDS metadata
+  string hostImageId = 7;           // `imageId` in IMDS metadata
+  string hostName = 8;              // hostname from either [gethostname() in Linux](https://man7.org/linux/man-pages/man2/gethostname.2.html) or [gethostname() in Windows](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-gethostname)
+  string hostType = 9;              // `instanceType` in IMDS metadata
+}
+
+/**
+ * Represents Azure metadata from [Instance Metadata Service IMDS](https://learn.microsoft.com/en-us/azure/virtual-machines/instance-metadata-service?tabs=linux)
+ */
+message Azure {
+  string cloudProvider = 1;           // always `azure`
+  string cloudPlatform = 2;           // always `azure_vm`
+  string cloudRegion = 3;             // `location` in IMDS metadata
+  string cloudAccountId = 4;          // `subscriptionId` in IMDS metadata
+  string hostId = 5;                  // `vmId` in IMDS metadata
+  string hostName = 6;                // `name` in IMDS metadata
+  string azureVmName = 7;             // `name` in IMDS metadata
+  string azureVmSize = 8;             // `vmSize` in IMDS metadata
+  string azureVmScaleSetName = 9;     // `vmScaleSetName` in IMDS metadata
+  string azureResourceGroupName = 10; // `resourceGroupName` in IMDS metadata
+}
+
+/**
+ * Represents k8s metadata
+ */
+message K8s {
+  string namespace = 1;     // equivalent to [k8s.namespace.name](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#namespace). The content from `/run/secrets/kubernetes.io/serviceaccount/namespace`
+  string podName = 2;       // equivalent to [k8s.pod.name](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#pod). hostname from `gethostname()` function call
+  string podUid = 3;        // equivalent to [k8s.pod.uid](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#pod). Parsed from `/proc/self/mountinfo` using best effort
+  string containerId = 4;   // id of a running container inside the pod. This field is not set for `cgroup2fs` system. Parsed from `/proc/self/cgroup` using best effort
+}
+
+/**
+ * Represents the host metadata needed to infer entity and make correlations from trace telemetry.
+ */
+message HostID {
+  string hostname = 1;                // hostname from either [gethostname() in Linux](https://man7.org/linux/man-pages/man2/gethostname.2.html) or [gethostname() in Windows](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-gethostname). Java agent will not refresh hostname for now to avoid spawning excessive processes.
+  repeated string ip_addresses = 2;   // obsolete
+  string uuid = 3;                    // [swo only] A random (version 4) UUID generated on application instance startup, analogous to the [OTel Resource attribute](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/README.md#service) `service.instance.id`, e.g. `51fcbc02-670e-454f-84d1-124a500a2646`, `f620e874-ff3d-4f33-825d-cc4b12b2d005`
+  int32 pid = 4;                      // process id from either [getpid()](https://man7.org/linux/man-pages/man2/getpid.2.html) or [GetCurrentProcessId()](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocessid)
+  string ec2InstanceID = 5;           // `instanceId` in AWS EC2 IMDS metadata
+  string ec2AvailabilityZone = 6;     // `availabilityZone` in AWS EC2 IMDS metadata
+  string dockerContainerID = 7;       // container id from `/proc/self/cgroup` for cgroups v1
+  repeated string macAddresses = 8;   // mac addresses for physical interfaces, skipping point-to-point and interfaces w/o IP address from either [getifaddrs(...)](https://man7.org/linux/man-pages/man3/getifaddrs.3.html) or [GetAdaptersAddresses(...)](https://learn.microsoft.com/en-us/windows/win32/api/iphlpapi/nf-iphlpapi-getadaptersaddresses)
+  string herokuDynoID = 9;            // [heroku dyno id](https://devcenter.heroku.com/articles/dynos#local-environment-variables) from environment variable `DYNO`
+  string azAppServiceInstanceID = 10; // Azure App Service `WEBSITE_INSTANCE_ID` which is the [unique ID of the current VM instance](https://learn.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet#scaling)
+  HostType hostType = 11;             // host type struct
+  string uamsClientID = 12;           // [swo only] [uamsclientid](https://swicloud.atlassian.net/wiki/spaces/arch/pages/2963917281/FAS+-+Universal+AMS+Client+-+Unique+Identification) exposed to the APM library for [Service-to-Host correlation](https://swicloud.atlassian.net/wiki/spaces/NIT/pages/2858778658/FAS+Topology+Map+Data+-+UAMS+APM+on-prem#UAMS-Client-Id-management). It is read from `/opt/solarwinds/uamsclient/var/uamsclientid` or `C:\ProgramData\SolarWinds\UAMSClient\uamsclientid`. Windows path may be different depending on the setup. If not found, it is retrieved from `http://127.0.0.1:2113/info/uamsclient` uamsclient_id property
+  Aws awsMetadata = 13;               // [swo only] aws ec2 metadata from IMDS
+  Azure azureMetadata = 14;           // [swo only] azure metadata from IMDS
+  K8s k8sMetadata = 15;               // [swo only] k8s metadata
+}
+
+/**
+ * Represents oboe setting type
+ */
+enum OboeSettingType {
+  DEFAULT_SAMPLE_RATE = 0;        // DEFAULT_SAMPLE_RATE
+  LAYER_SAMPLE_RATE = 1;          // obsolete
+  LAYER_APP_SAMPLE_RATE = 2;      // obsolete
+  LAYER_HTTPHOST_SAMPLE_RATE = 3; // obsolete
+  CONFIG_STRING = 4;              // obsolete
+  CONFIG_INT = 5;                 // obsolete
+}
+
+/**
+ * Represents oboe setting message
+ */
+message OboeSetting {
+  OboeSettingType type = 1;         // oboe setting type struct, always DEFAULT_SAMPLE_RATE
+  bytes flags = 2;                  // flags where { OK=0x0, INVALID=0x1, OVERRIDE=0x2, SAMPLE_START=0x4, SAMPLE_THROUGH=0x8, SAMPLE_THROUGH_ALWAYS=0x10, TRIGGERED_TRACE=0x20 }. e.g. 54 means OK or OVERRIDE or SAMPLE_START or SAMPLE_THROUGH_ALWAYS or TRIGGERED_TRACE
+  int64 timestamp = 3;              // Epoch timestamp
+  int64 value = 4;                  // Sampling rate, 1000000 means 100%
+  bytes layer = 5;                  // layer name, not set since type is always DEFAULT_SAMPLE_RATE
+  map<string, bytes> arguments = 7; // key-value pairs. Keys can be [`BucketCapacity`, `BucketRate`, `TriggerRelaxedBucketCapacity`, `TriggerRelaxedBucketRate`, `TriggerStrictBucketCapacity`, `TriggerStrictBucketRate`, `SignatureKey`]
+  int64 ttl = 8;                    // time to live for this setting struct
+}
+
+/**
+ * Represents the message request
+ */
+message MessageRequest {
+  string api_key = 1;               // the Service Key provided by the customer to authenticate and identify the tenant and service the message is destined for. It is a string composed of two parts, an API token and a descriptive service name, separated by a colon `:`. Example: `qwertyuiop1234567:my_cool_service`.
+  repeated bytes messages = 2;      // bson messages
+  EncodingType encoding = 3;        // always `EncodingType::BSON`
+  HostID identity = 4;              // host id
+}
+
+/**
+ * Represents the message results
+ */
+message MessageResult {
+  ResultCode result = 1; // result code from the collector
+  string arg = 2;        // obsolete
+  string warning = 4;    // user-facing warning message. The APM library attempts to squelch repeated warnings, so care should be taken to ensure that warning messages are consistent across all RPCs.
+}
+
+/**
+ * Represents the settings request
+ */
+message SettingsRequest {
+  string api_key = 1;       // the Service Key provided by the customer to authenticate and identify the tenant and service the message is destined for. It is a string composed of two parts, an API token and a descriptive service name, separated by a colon `:`. Example: `qwertyuiop1234567:my_cool_service`.
+  HostID identity = 2;      // host id, only the `hostname` field needs to be set, all the other fields should be left empty.
+  string clientVersion = 3; // always `2`
+}
+
+/**
+ * Represents the settings result
+ */
+message SettingsResult {
+  ResultCode result = 1;             // result code from the collector
+  string arg = 2;                    // obsolete
+  repeated OboeSetting settings = 3; // sampling settings
+  string warning = 4;                // user-facing warning message. The APM library attempts to squelch repeated warnings, so care should be taken to ensure that warning messages are consistent across all RPCs.
+}
+
+/**
+ * Represents the ping request
+ */
+message PingRequest {
+  string api_key = 1; // the Service Key provided by the customer to authenticate and identify the tenant and service the message is destined for. It is a string composed of two parts, an API token and a descriptive service name, separated by a colon `:`. Example: `qwertyuiop1234567:my_cool_service`.
+}
+
+/**
+ * Represents the trace collector service
+ */
+service TraceCollector {
+  // post events (traces) to collector.
+  rpc postEvents(MessageRequest) returns (MessageResult) {}
+  // post metrics (internal heartbeats, request counters, summary, runtime or custom metrics) to collector
+  rpc postMetrics(MessageRequest) returns (MessageResult) {}
+  // post [__Init](https://github.com/librato/trace/blob/master/docs/specs/KV/init.md) message to collector. May be used by APM library to validate api_key.
+  rpc postStatus(MessageRequest) returns (MessageResult) {}
+  // get sampling and other settings for this connection.  Note the SettingsRequest requirement for HostID fields. May be used by APM library to validate api_key.
+  rpc getSettings(SettingsRequest) returns (SettingsResult) {}
+  // ping is used for keep-alive purpose. The APM library is expected to ping the collector if the connection has been idled for 20 seconds (by default). Take note that keep-alive should only be performed if the connection was previously healthy - last API call gave a response
+  rpc ping(PingRequest) returns (MessageResult) {}
+}
