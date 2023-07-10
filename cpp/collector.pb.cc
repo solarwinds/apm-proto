@@ -69,7 +69,6 @@ PROTOBUF_CONSTEXPR K8s::K8s(
     /*decltype(_impl_.namespace__)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.podname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.poduid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.containerid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct K8sDefaultTypeInternal {
   PROTOBUF_CONSTEXPR K8sDefaultTypeInternal()
@@ -258,7 +257,6 @@ const uint32_t TableStruct_collector_2eproto::offsets[] PROTOBUF_SECTION_VARIABL
   PROTOBUF_FIELD_OFFSET(::collector::K8s, _impl_.namespace__),
   PROTOBUF_FIELD_OFFSET(::collector::K8s, _impl_.podname_),
   PROTOBUF_FIELD_OFFSET(::collector::K8s, _impl_.poduid_),
-  PROTOBUF_FIELD_OFFSET(::collector::K8s, _impl_.containerid_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::collector::HostID, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -353,14 +351,14 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 0, -1, -1, sizeof(::collector::Aws)},
   { 15, -1, -1, sizeof(::collector::Azure)},
   { 31, -1, -1, sizeof(::collector::K8s)},
-  { 41, -1, -1, sizeof(::collector::HostID)},
-  { 62, 70, -1, sizeof(::collector::OboeSetting_ArgumentsEntry_DoNotUse)},
-  { 72, -1, -1, sizeof(::collector::OboeSetting)},
-  { 85, -1, -1, sizeof(::collector::MessageRequest)},
-  { 95, -1, -1, sizeof(::collector::MessageResult)},
-  { 104, -1, -1, sizeof(::collector::SettingsRequest)},
-  { 113, -1, -1, sizeof(::collector::SettingsResult)},
-  { 123, -1, -1, sizeof(::collector::PingRequest)},
+  { 40, -1, -1, sizeof(::collector::HostID)},
+  { 61, 69, -1, sizeof(::collector::OboeSetting_ArgumentsEntry_DoNotUse)},
+  { 71, -1, -1, sizeof(::collector::OboeSetting)},
+  { 84, -1, -1, sizeof(::collector::MessageRequest)},
+  { 94, -1, -1, sizeof(::collector::MessageResult)},
+  { 103, -1, -1, sizeof(::collector::SettingsRequest)},
+  { 112, -1, -1, sizeof(::collector::SettingsResult)},
+  { 122, -1, -1, sizeof(::collector::PingRequest)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -389,60 +387,60 @@ const char descriptor_table_protodef_collector_2eproto[] PROTOBUF_SECTION_VARIAB
   "ountId\030\004 \001(\t\022\016\n\006hostId\030\005 \001(\t\022\020\n\010hostName"
   "\030\006 \001(\t\022\023\n\013azureVmName\030\007 \001(\t\022\023\n\013azureVmSi"
   "ze\030\010 \001(\t\022\033\n\023azureVmScaleSetName\030\t \001(\t\022\036\n"
-  "\026azureResourceGroupName\030\n \001(\t\"N\n\003K8s\022\021\n\t"
+  "\026azureResourceGroupName\030\n \001(\t\"9\n\003K8s\022\021\n\t"
   "namespace\030\001 \001(\t\022\017\n\007podName\030\002 \001(\t\022\016\n\006podU"
-  "id\030\003 \001(\t\022\023\n\013containerId\030\004 \001(\t\"\226\003\n\006HostID"
-  "\022\020\n\010hostname\030\001 \001(\t\022\024\n\014ip_addresses\030\002 \003(\t"
-  "\022\014\n\004uuid\030\003 \001(\t\022\013\n\003pid\030\004 \001(\005\022\025\n\rec2Instan"
-  "ceID\030\005 \001(\t\022\033\n\023ec2AvailabilityZone\030\006 \001(\t\022"
-  "\031\n\021dockerContainerID\030\007 \001(\t\022\024\n\014macAddress"
-  "es\030\010 \003(\t\022\024\n\014herokuDynoID\030\t \001(\t\022\036\n\026azAppS"
-  "erviceInstanceID\030\n \001(\t\022%\n\010hostType\030\013 \001(\016"
-  "2\023.collector.HostType\022\024\n\014uamsClientID\030\014 "
-  "\001(\t\022#\n\013awsMetadata\030\r \001(\0132\016.collector.Aws"
-  "\022\'\n\razureMetadata\030\016 \001(\0132\020.collector.Azur"
-  "e\022#\n\013k8sMetadata\030\017 \001(\0132\016.collector.K8s\"\360"
-  "\001\n\013OboeSetting\022(\n\004type\030\001 \001(\0162\032.collector"
-  ".OboeSettingType\022\r\n\005flags\030\002 \001(\014\022\021\n\ttimes"
-  "tamp\030\003 \001(\003\022\r\n\005value\030\004 \001(\003\022\r\n\005layer\030\005 \001(\014"
-  "\0228\n\targuments\030\007 \003(\0132%.collector.OboeSett"
-  "ing.ArgumentsEntry\022\013\n\003ttl\030\010 \001(\003\0320\n\016Argum"
-  "entsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\014:\0028"
-  "\001\"\203\001\n\016MessageRequest\022\017\n\007api_key\030\001 \001(\t\022\020\n"
-  "\010messages\030\002 \003(\014\022)\n\010encoding\030\003 \001(\0162\027.coll"
-  "ector.EncodingType\022#\n\010identity\030\004 \001(\0132\021.c"
-  "ollector.HostID\"T\n\rMessageResult\022%\n\006resu"
-  "lt\030\001 \001(\0162\025.collector.ResultCode\022\013\n\003arg\030\002"
-  " \001(\t\022\017\n\007warning\030\004 \001(\t\"^\n\017SettingsRequest"
-  "\022\017\n\007api_key\030\001 \001(\t\022#\n\010identity\030\002 \001(\0132\021.co"
-  "llector.HostID\022\025\n\rclientVersion\030\003 \001(\t\"\177\n"
-  "\016SettingsResult\022%\n\006result\030\001 \001(\0162\025.collec"
-  "tor.ResultCode\022\013\n\003arg\030\002 \001(\t\022(\n\010settings\030"
-  "\003 \003(\0132\026.collector.OboeSetting\022\017\n\007warning"
-  "\030\004 \001(\t\"\036\n\013PingRequest\022\017\n\007api_key\030\001 \001(\t*Z"
-  "\n\nResultCode\022\006\n\002OK\020\000\022\r\n\tTRY_LATER\020\001\022\023\n\017I"
-  "NVALID_API_KEY\020\002\022\022\n\016LIMIT_EXCEEDED\020\003\022\014\n\010"
-  "REDIRECT\020\004*&\n\014EncodingType\022\010\n\004BSON\020\000\022\014\n\010"
-  "PROTOBUF\020\001**\n\010HostType\022\016\n\nPERSISTENT\020\000\022\016"
-  "\n\nAWS_LAMBDA\020\001*\237\001\n\017OboeSettingType\022\027\n\023DE"
-  "FAULT_SAMPLE_RATE\020\000\022\025\n\021LAYER_SAMPLE_RATE"
-  "\020\001\022\031\n\025LAYER_APP_SAMPLE_RATE\020\002\022\036\n\032LAYER_H"
-  "TTPHOST_SAMPLE_RATE\020\003\022\021\n\rCONFIG_STRING\020\004"
-  "\022\016\n\nCONFIG_INT\020\0052\344\002\n\016TraceCollector\022C\n\np"
-  "ostEvents\022\031.collector.MessageRequest\032\030.c"
-  "ollector.MessageResult\"\000\022D\n\013postMetrics\022"
-  "\031.collector.MessageRequest\032\030.collector.M"
-  "essageResult\"\000\022C\n\npostStatus\022\031.collector"
+  "id\030\003 \001(\t\"\226\003\n\006HostID\022\020\n\010hostname\030\001 \001(\t\022\024\n"
+  "\014ip_addresses\030\002 \003(\t\022\014\n\004uuid\030\003 \001(\t\022\013\n\003pid"
+  "\030\004 \001(\005\022\025\n\rec2InstanceID\030\005 \001(\t\022\033\n\023ec2Avai"
+  "labilityZone\030\006 \001(\t\022\031\n\021dockerContainerID\030"
+  "\007 \001(\t\022\024\n\014macAddresses\030\010 \003(\t\022\024\n\014herokuDyn"
+  "oID\030\t \001(\t\022\036\n\026azAppServiceInstanceID\030\n \001("
+  "\t\022%\n\010hostType\030\013 \001(\0162\023.collector.HostType"
+  "\022\024\n\014uamsClientID\030\014 \001(\t\022#\n\013awsMetadata\030\r "
+  "\001(\0132\016.collector.Aws\022\'\n\razureMetadata\030\016 \001"
+  "(\0132\020.collector.Azure\022#\n\013k8sMetadata\030\017 \001("
+  "\0132\016.collector.K8s\"\360\001\n\013OboeSetting\022(\n\004typ"
+  "e\030\001 \001(\0162\032.collector.OboeSettingType\022\r\n\005f"
+  "lags\030\002 \001(\014\022\021\n\ttimestamp\030\003 \001(\003\022\r\n\005value\030\004"
+  " \001(\003\022\r\n\005layer\030\005 \001(\014\0228\n\targuments\030\007 \003(\0132%"
+  ".collector.OboeSetting.ArgumentsEntry\022\013\n"
+  "\003ttl\030\010 \001(\003\0320\n\016ArgumentsEntry\022\013\n\003key\030\001 \001("
+  "\t\022\r\n\005value\030\002 \001(\014:\0028\001\"\203\001\n\016MessageRequest\022"
+  "\017\n\007api_key\030\001 \001(\t\022\020\n\010messages\030\002 \003(\014\022)\n\010en"
+  "coding\030\003 \001(\0162\027.collector.EncodingType\022#\n"
+  "\010identity\030\004 \001(\0132\021.collector.HostID\"T\n\rMe"
+  "ssageResult\022%\n\006result\030\001 \001(\0162\025.collector."
+  "ResultCode\022\013\n\003arg\030\002 \001(\t\022\017\n\007warning\030\004 \001(\t"
+  "\"^\n\017SettingsRequest\022\017\n\007api_key\030\001 \001(\t\022#\n\010"
+  "identity\030\002 \001(\0132\021.collector.HostID\022\025\n\rcli"
+  "entVersion\030\003 \001(\t\"\177\n\016SettingsResult\022%\n\006re"
+  "sult\030\001 \001(\0162\025.collector.ResultCode\022\013\n\003arg"
+  "\030\002 \001(\t\022(\n\010settings\030\003 \003(\0132\026.collector.Obo"
+  "eSetting\022\017\n\007warning\030\004 \001(\t\"\036\n\013PingRequest"
+  "\022\017\n\007api_key\030\001 \001(\t*Z\n\nResultCode\022\006\n\002OK\020\000\022"
+  "\r\n\tTRY_LATER\020\001\022\023\n\017INVALID_API_KEY\020\002\022\022\n\016L"
+  "IMIT_EXCEEDED\020\003\022\014\n\010REDIRECT\020\004*&\n\014Encodin"
+  "gType\022\010\n\004BSON\020\000\022\014\n\010PROTOBUF\020\001**\n\010HostTyp"
+  "e\022\016\n\nPERSISTENT\020\000\022\016\n\nAWS_LAMBDA\020\001*\237\001\n\017Ob"
+  "oeSettingType\022\027\n\023DEFAULT_SAMPLE_RATE\020\000\022\025"
+  "\n\021LAYER_SAMPLE_RATE\020\001\022\031\n\025LAYER_APP_SAMPL"
+  "E_RATE\020\002\022\036\n\032LAYER_HTTPHOST_SAMPLE_RATE\020\003"
+  "\022\021\n\rCONFIG_STRING\020\004\022\016\n\nCONFIG_INT\020\0052\344\002\n\016"
+  "TraceCollector\022C\n\npostEvents\022\031.collector"
   ".MessageRequest\032\030.collector.MessageResul"
-  "t\"\000\022F\n\013getSettings\022\032.collector.SettingsR"
-  "equest\032\031.collector.SettingsResult\"\000\022:\n\004p"
-  "ing\022\026.collector.PingRequest\032\030.collector."
-  "MessageResult\"\000B5\n$com.solarwinds.trace."
-  "ingestion.protoZ\r./collectorpbb\006proto3"
+  "t\"\000\022D\n\013postMetrics\022\031.collector.MessageRe"
+  "quest\032\030.collector.MessageResult\"\000\022C\n\npos"
+  "tStatus\022\031.collector.MessageRequest\032\030.col"
+  "lector.MessageResult\"\000\022F\n\013getSettings\022\032."
+  "collector.SettingsRequest\032\031.collector.Se"
+  "ttingsResult\"\000\022:\n\004ping\022\026.collector.PingR"
+  "equest\032\030.collector.MessageResult\"\000B5\n$co"
+  "m.solarwinds.trace.ingestion.protoZ\r./co"
+  "llectorpbb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_collector_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_collector_2eproto = {
-    false, false, 2438, descriptor_table_protodef_collector_2eproto,
+    false, false, 2417, descriptor_table_protodef_collector_2eproto,
     "collector.proto",
     &descriptor_table_collector_2eproto_once, nullptr, 0, 11,
     schemas, file_default_instances, TableStruct_collector_2eproto::offsets,
@@ -1795,7 +1793,6 @@ K8s::K8s(const K8s& from)
       decltype(_impl_.namespace__){}
     , decltype(_impl_.podname_){}
     , decltype(_impl_.poduid_){}
-    , decltype(_impl_.containerid_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -1823,14 +1820,6 @@ K8s::K8s(const K8s& from)
     _this->_impl_.poduid_.Set(from._internal_poduid(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.containerid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.containerid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_containerid().empty()) {
-    _this->_impl_.containerid_.Set(from._internal_containerid(), 
-      _this->GetArenaForAllocation());
-  }
   // @@protoc_insertion_point(copy_constructor:collector.K8s)
 }
 
@@ -1842,7 +1831,6 @@ inline void K8s::SharedCtor(
       decltype(_impl_.namespace__){}
     , decltype(_impl_.podname_){}
     , decltype(_impl_.poduid_){}
-    , decltype(_impl_.containerid_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.namespace__.InitDefault();
@@ -1856,10 +1844,6 @@ inline void K8s::SharedCtor(
   _impl_.poduid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.poduid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.containerid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.containerid_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -1877,7 +1861,6 @@ inline void K8s::SharedDtor() {
   _impl_.namespace__.Destroy();
   _impl_.podname_.Destroy();
   _impl_.poduid_.Destroy();
-  _impl_.containerid_.Destroy();
 }
 
 void K8s::SetCachedSize(int size) const {
@@ -1893,7 +1876,6 @@ void K8s::Clear() {
   _impl_.namespace__.ClearToEmpty();
   _impl_.podname_.ClearToEmpty();
   _impl_.poduid_.ClearToEmpty();
-  _impl_.containerid_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1930,16 +1912,6 @@ const char* K8s::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "collector.K8s.podUid"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string containerId = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_containerid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "collector.K8s.containerId"));
         } else
           goto handle_unusual;
         continue;
@@ -2002,16 +1974,6 @@ uint8_t* K8s::_InternalSerialize(
         3, this->_internal_poduid(), target);
   }
 
-  // string containerId = 4;
-  if (!this->_internal_containerid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_containerid().data(), static_cast<int>(this->_internal_containerid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "collector.K8s.containerId");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_containerid(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2049,13 +2011,6 @@ size_t K8s::ByteSizeLong() const {
         this->_internal_poduid());
   }
 
-  // string containerId = 4;
-  if (!this->_internal_containerid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_containerid());
-  }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -2082,9 +2037,6 @@ void K8s::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_N
   }
   if (!from._internal_poduid().empty()) {
     _this->_internal_set_poduid(from._internal_poduid());
-  }
-  if (!from._internal_containerid().empty()) {
-    _this->_internal_set_containerid(from._internal_containerid());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -2116,10 +2068,6 @@ void K8s::InternalSwap(K8s* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.poduid_, lhs_arena,
       &other->_impl_.poduid_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.containerid_, lhs_arena,
-      &other->_impl_.containerid_, rhs_arena
   );
 }
 

@@ -121,7 +121,6 @@ Represents k8s metadata
 | namespace | [string](#string) |  | equivalent to [k8s.namespace.name](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#namespace). The content from `/run/secrets/kubernetes.io/serviceaccount/namespace` |
 | podName | [string](#string) |  | equivalent to [k8s.pod.name](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#pod). hostname from `gethostname()` function call |
 | podUid | [string](#string) |  | equivalent to [k8s.pod.uid](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/resource/semantic_conventions/k8s.md#pod). Parsed from `/proc/self/mountinfo` using best effort |
-| containerId | [string](#string) |  | id of a running container inside the pod. This field is not set for `cgroup2fs` system. Parsed from `/proc/self/cgroup` using best effort |
 
 
 
