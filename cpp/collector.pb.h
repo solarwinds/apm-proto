@@ -909,7 +909,6 @@ class K8s final :
     kNamespaceFieldNumber = 1,
     kPodNameFieldNumber = 2,
     kPodUidFieldNumber = 3,
-    kContainerIdFieldNumber = 4,
   };
   // string namespace = 1;
   void clear_namespace_();
@@ -953,20 +952,6 @@ class K8s final :
   std::string* _internal_mutable_poduid();
   public:
 
-  // string containerId = 4;
-  void clear_containerid();
-  const std::string& containerid() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_containerid(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_containerid();
-  PROTOBUF_NODISCARD std::string* release_containerid();
-  void set_allocated_containerid(std::string* containerid);
-  private:
-  const std::string& _internal_containerid() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_containerid(const std::string& value);
-  std::string* _internal_mutable_containerid();
-  public:
-
   // @@protoc_insertion_point(class_scope:collector.K8s)
  private:
   class _Internal;
@@ -978,7 +963,6 @@ class K8s final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr namespace__;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr podname_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr poduid_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr containerid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3697,56 +3681,6 @@ inline void K8s::set_allocated_poduid(std::string* poduid) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:collector.K8s.podUid)
-}
-
-// string containerId = 4;
-inline void K8s::clear_containerid() {
-  _impl_.containerid_.ClearToEmpty();
-}
-inline const std::string& K8s::containerid() const {
-  // @@protoc_insertion_point(field_get:collector.K8s.containerId)
-  return _internal_containerid();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void K8s::set_containerid(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.containerid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:collector.K8s.containerId)
-}
-inline std::string* K8s::mutable_containerid() {
-  std::string* _s = _internal_mutable_containerid();
-  // @@protoc_insertion_point(field_mutable:collector.K8s.containerId)
-  return _s;
-}
-inline const std::string& K8s::_internal_containerid() const {
-  return _impl_.containerid_.Get();
-}
-inline void K8s::_internal_set_containerid(const std::string& value) {
-  
-  _impl_.containerid_.Set(value, GetArenaForAllocation());
-}
-inline std::string* K8s::_internal_mutable_containerid() {
-  
-  return _impl_.containerid_.Mutable(GetArenaForAllocation());
-}
-inline std::string* K8s::release_containerid() {
-  // @@protoc_insertion_point(field_release:collector.K8s.containerId)
-  return _impl_.containerid_.Release();
-}
-inline void K8s::set_allocated_containerid(std::string* containerid) {
-  if (containerid != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.containerid_.SetAllocated(containerid, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.containerid_.IsDefault()) {
-    _impl_.containerid_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:collector.K8s.containerId)
 }
 
 // -------------------------------------------------------------------
