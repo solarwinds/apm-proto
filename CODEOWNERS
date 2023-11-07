@@ -1,8 +1,5 @@
-# current, remove after EMU teams are created
-* @solarwindscloud/apm-instrumentation @swi-jared @gglogowski
-
 # as of Sept 2023, remove after GH EMU move (see below)
-* @solarwindscloud/eng-apm-instrumentation
+* @solarwindscloud/eng-apm-instrumentation @swi-jared @gglogowski
 
 # placeholder for GH EMU where this will move to new org for public repos
-* @solarwinds/eng-apm-instrumentation
+* @solarwinds/eng-pub-apm-instrumentation
