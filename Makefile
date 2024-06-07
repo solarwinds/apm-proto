@@ -1,6 +1,6 @@
 pwd := $(shell pwd)
 
-all: cpp go doc
+all: clean cpp go mockery doc
 
 .PHONY: cpp
 cpp:
@@ -11,6 +11,11 @@ cpp:
 go:
 	@echo "Generating apm-library package for Go"
 	@docker run --user `id -u` --rm -v $(PWD):/defs namely/protoc-all:1.51_1 -d . -l go -o go
+	@docker run --rm -v "${PWD}":/apm-proto -w /apm-proto/go/collectorpb golang:1.21.0 sh -c "go mod init github.com/solarwinds/apm-proto/go/collectorpb && go mod tidy"
+
+.PHONY: mockery
+mockery:
+	@docker run --user `id -u` --rm -v "${PWD}/go/collectorpb":/src -w /src vektra/mockery --all --case=underscore
 
 .PHONY: doc
 doc:
