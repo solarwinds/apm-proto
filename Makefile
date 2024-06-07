@@ -15,7 +15,7 @@ go:
 
 .PHONY: mockery
 mockery:
-	@docker run --rm -v "${PWD}/go/collectorpb":/src -w /src vektra/mockery --all --case=underscore
+	@docker run --user `id -u` --rm -v "${PWD}/go/collectorpb":/src -w /src vektra/mockery --all --case=underscore
 
 .PHONY: doc
 doc:
