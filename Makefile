@@ -11,6 +11,9 @@ cpp:
 go:
 	@echo "Generating apm-library package for Go"
 	@docker run --user `id -u` --rm -v $(PWD):/defs namely/protoc-all:1.51_1 -d . -l go -o go
+	@cd go/collectorpb
+	@go mod init github.com/solarwinds/apm-proto/tree/main/go/collectorpb
+	@go mod tidy
 
 .PHONY: doc
 doc:
