@@ -41,7 +41,7 @@ jobs:
       - name: Set Version
         run: mvn versions:set -DnewVersion=${{ github.event.inputs.version }} -B
       - name: Deploy
-        run: mvn deploy -DskipTests -B -X
+        run: mvn -s .github/workflows/m2/settings.xml deploy -DskipTests -B -X
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: Figure out the project version from pom.xml
