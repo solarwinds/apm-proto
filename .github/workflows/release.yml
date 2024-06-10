@@ -3,6 +3,10 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: version
 
 jobs:
   build:
@@ -22,29 +26,35 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Configure git
-        run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - name: Prepare release
-        run: mvn --batch-mode release:prepare
+#      - name: Configure git
+#        run: |
+#          git config --global user.name "${GITHUB_ACTOR}"
+#          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+#      - name: Prepare release
+#        run: mvn --batch-mode release:prepare
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Perform release
+#        run: mvn --batch-mode release:perform
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set Version
+        run: mvn versions:set -DnewVersion=${{ github.event.inputs.version }} -B
+      - name: Deploy
+        run: mvn deploy -B
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Perform release
-        run: mvn --batch-mode release:perform
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Figure out the project version from pom.xml
-        run: |
-          # Go back to the commit before the SNAPSHOT
-          git reset --hard HEAD~1
-          echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_ENV"
-      - name: Create Release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: apm-proto-${{ env.VERSION }}
-          release_name: apm-proto ${{ env.VERSION }}
-          draft: false
-          prerelease: false
+#      - name: Figure out the project version from pom.xml
+#        run: |
+#          # Go back to the commit before the SNAPSHOT
+#          git reset --hard HEAD~1
+#          echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> "$GITHUB_ENV"
+#      - name: Create Release
+#        uses: actions/create-release@latest
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: apm-proto-${{ env.VERSION }}
+#          release_name: apm-proto ${{ env.VERSION }}
+#          draft: false
+#          prerelease: false
