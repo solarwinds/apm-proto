@@ -3,9 +3,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>cloud.solarwindscloud</groupId>
+  <groupId>cloud.solarwinds</groupId>
   <artifactId>apm-proto</artifactId>
-  <version>1.0.4-SNAPSHOT</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -116,14 +115,8 @@
     <repository>
       <id>github</id>
       <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/solarwindscloud/apm-proto</url>
+      <url>https://maven.pkg.github.com/solarwinds/apm-proto</url>
     </repository>
   </distributionManagement>
-
-  <scm>
-    <connection>scm:git:https://github.com/solarwindscloud/apm-proto</connection>
-    <developerConnection>scm:git:https://github.com/solarwindscloud/apm-proto</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
 
 </project>
