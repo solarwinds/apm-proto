@@ -3,11 +3,6 @@ on:
   push:
     tags:
       - v*
-  workflow_dispatch:
-    inputs:
-      version:
-        required: true
-        description: version
 
 jobs:
   build:
@@ -29,7 +24,7 @@ jobs:
           distribution: 'adopt'
       - name: Set Version
         run: |
-          version=$(echo ${{ github.event.inputs.version }} | sed 's/^v//')
+          version=$(echo ${{ github.ref_name }} | sed 's/^v//')
           mvn versions:set -DnewVersion=$version -B
       - name: Build with Maven
         run: mvn -B package --file pom.xml
@@ -37,12 +32,12 @@ jobs:
         run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ github.token }} # GITHUB_TOKEN is the default env for the password
-#      - name: Create Release
-#        uses: actions/create-release@latest
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref_name }}
-#          release_name: apm-proto ${{ github.ref_name }}
-#          draft: false
-#          prerelease: false
+      - name: Create Release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: apm-proto ${{ github.ref_name }}
+          draft: false
+          prerelease: false
