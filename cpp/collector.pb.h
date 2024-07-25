@@ -1558,14 +1558,14 @@ class OboeSetting final :
   std::string* _internal_mutable_flags();
   public:
 
-  // bytes layer = 5;
-  void clear_layer();
-  const std::string& layer() const;
+  // bytes layer = 5 [deprecated = true];
+  PROTOBUF_DEPRECATED void clear_layer();
+  PROTOBUF_DEPRECATED const std::string& layer() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_layer(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_layer();
-  PROTOBUF_NODISCARD std::string* release_layer();
-  void set_allocated_layer(std::string* layer);
+  PROTOBUF_DEPRECATED void set_layer(ArgT0&& arg0, ArgT... args);
+  PROTOBUF_DEPRECATED std::string* mutable_layer();
+  PROTOBUF_NODISCARD PROTOBUF_DEPRECATED std::string* release_layer();
+  PROTOBUF_DEPRECATED void set_allocated_layer(std::string* layer);
   private:
   const std::string& _internal_layer() const;
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_layer(const std::string& value);
@@ -1599,10 +1599,10 @@ class OboeSetting final :
   void _internal_set_ttl(int64_t value);
   public:
 
-  // .collector.OboeSettingType type = 1;
-  void clear_type();
-  ::collector::OboeSettingType type() const;
-  void set_type(::collector::OboeSettingType value);
+  // .collector.OboeSettingType type = 1 [deprecated = true];
+  PROTOBUF_DEPRECATED void clear_type();
+  PROTOBUF_DEPRECATED ::collector::OboeSettingType type() const;
+  PROTOBUF_DEPRECATED void set_type(::collector::OboeSettingType value);
   private:
   ::collector::OboeSettingType _internal_type() const;
   void _internal_set_type(::collector::OboeSettingType value);
@@ -4553,7 +4553,7 @@ inline void HostID::set_allocated_k8smetadata(::collector::K8s* k8smetadata) {
 
 // OboeSetting
 
-// .collector.OboeSettingType type = 1;
+// .collector.OboeSettingType type = 1 [deprecated = true];
 inline void OboeSetting::clear_type() {
   _impl_.type_ = 0;
 }
@@ -4663,7 +4663,7 @@ inline void OboeSetting::set_value(int64_t value) {
   // @@protoc_insertion_point(field_set:collector.OboeSetting.value)
 }
 
-// bytes layer = 5;
+// bytes layer = 5 [deprecated = true];
 inline void OboeSetting::clear_layer() {
   _impl_.layer_.ClearToEmpty();
 }
