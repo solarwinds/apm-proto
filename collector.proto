@@ -111,13 +111,13 @@ enum OboeSettingType {
  * Represents oboe setting message
  */
 message OboeSetting {
-  OboeSettingType type = 1;         // oboe setting type struct, always DEFAULT_SAMPLE_RATE
+  OboeSettingType type = 1 [deprecated = true]; // oboe setting type struct, always DEFAULT_SAMPLE_RATE
   bytes flags = 2;                  // flags where { OK=0x0, INVALID=0x1, OVERRIDE=0x2, SAMPLE_START=0x4, SAMPLE_THROUGH=0x8, SAMPLE_THROUGH_ALWAYS=0x10, TRIGGERED_TRACE=0x20 }. e.g. 54 means OK or OVERRIDE or SAMPLE_START or SAMPLE_THROUGH_ALWAYS or TRIGGERED_TRACE
   int64 timestamp = 3;              // Epoch timestamp
   int64 value = 4;                  // Sampling rate, 1000000 means 100%
-  bytes layer = 5;                  // layer name, not set since type is always DEFAULT_SAMPLE_RATE
+  bytes layer = 5 [deprecated = true];          // layer name, not set since type is always DEFAULT_SAMPLE_RATE
   map<string, bytes> arguments = 7; // key-value pairs. Keys can be [`BucketCapacity`, `BucketRate`, `TriggerRelaxedBucketCapacity`, `TriggerRelaxedBucketRate`, `TriggerStrictBucketCapacity`, `TriggerStrictBucketRate`, `SignatureKey`]
-  int64 ttl = 8;                    // time to live for this setting struct
+  int64 ttl = 8;                    // time to live for this setting struct, in seconds
 }
 
 /**

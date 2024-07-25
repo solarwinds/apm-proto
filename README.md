@@ -170,13 +170,13 @@ Represents oboe setting message
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| type | [OboeSettingType](#collector-OboeSettingType) |  | oboe setting type struct, always DEFAULT_SAMPLE_RATE |
+| type | [OboeSettingType](#collector-OboeSettingType) |  | **Deprecated.** oboe setting type struct, always DEFAULT_SAMPLE_RATE |
 | flags | [bytes](#bytes) |  | flags where { OK=0x0, INVALID=0x1, OVERRIDE=0x2, SAMPLE_START=0x4, SAMPLE_THROUGH=0x8, SAMPLE_THROUGH_ALWAYS=0x10, TRIGGERED_TRACE=0x20 }. e.g. 54 means OK or OVERRIDE or SAMPLE_START or SAMPLE_THROUGH_ALWAYS or TRIGGERED_TRACE |
 | timestamp | [int64](#int64) |  | Epoch timestamp |
 | value | [int64](#int64) |  | Sampling rate, 1000000 means 100% |
-| layer | [bytes](#bytes) |  | layer name, not set since type is always DEFAULT_SAMPLE_RATE |
+| layer | [bytes](#bytes) |  | **Deprecated.** layer name, not set since type is always DEFAULT_SAMPLE_RATE |
 | arguments | [OboeSetting.ArgumentsEntry](#collector-OboeSetting-ArgumentsEntry) | repeated | key-value pairs. Keys can be [`BucketCapacity`, `BucketRate`, `TriggerRelaxedBucketCapacity`, `TriggerRelaxedBucketRate`, `TriggerStrictBucketCapacity`, `TriggerStrictBucketRate`, `SignatureKey`] |
-| ttl | [int64](#int64) |  | time to live for this setting struct |
+| ttl | [int64](#int64) |  | time to live for this setting struct, in seconds |
 
 
 
