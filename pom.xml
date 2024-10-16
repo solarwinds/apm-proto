@@ -9,9 +9,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <grpc.version>1.51.1</grpc.version><!-- CURRENT_GRPC_VERSION -->
-    <protobuf.version>3.21.7</protobuf.version>
-    <protoc.version>3.21.7</protoc.version>
+    <grpc.version>1.68.0</grpc.version><!-- CURRENT_GRPC_VERSION -->
+    <protobuf.version>3.25.5</protobuf.version>
+    <protoc.version>3.25.5</protoc.version>
     <!-- required for JDK 8 -->
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -20,6 +20,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-bom</artifactId>
+        <version>${protobuf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-bom</artifactId>
@@ -47,26 +54,6 @@
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java-util</artifactId>
-      <version>${protobuf.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.10.1</version> <!-- prevent downgrade via protobuf-java-util -->
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>32.0.1-jre</version> <!-- prevent downgrade of version in protobuf-java-util -->
-    </dependency>
-    <dependency>
-      <groupId>com.google.j2objc</groupId>
-      <artifactId>j2objc-annotations</artifactId>
-      <version>2.8</version> <!-- prevent downgrade of version in guava -->
     </dependency>
     <dependency>
       <groupId>org.apache.tomcat</groupId>
