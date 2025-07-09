@@ -11,8 +11,8 @@ cpp:
 go:
 	@echo "Generating apm-library package for Go"
 	@docker run --user `id -u` --rm -v $(PWD):/defs namely/protoc-all:1.51_1 -d . -l go -o go
-	@docker run --rm -v "${PWD}":/apm-proto -w /apm-proto/go/collectorpb golang:1.21.0 sh -c "go mod init github.com/solarwindscloud/apm-proto/go/collectorpb && go mod tidy"
-	@docker run --user `id -u` --rm -v "${PWD}/go/collectorpb":/src -w /src vektra/mockery --all --case=underscore
+	@docker run --rm -v "${PWD}":/apm-proto -w /apm-proto/go/collectorpb golang:1.21.0 sh -c "go mod init github.com/solarwinds/apm-proto/go/collectorpb && go mod tidy"
+	@docker run --user `id -u` --rm -v "${PWD}/go/collectorpb":/src -w /src vektra/mockery:v2 --all --case=underscore
 	@rm -rf go/collectorpb/go.*
 
 .PHONY: doc
