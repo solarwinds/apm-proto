@@ -5,7 +5,7 @@ package mocks
 import (
 	context "context"
 
-	collectorpb "github.com/solarwindscloud/apm-proto/go/collectorpb"
+	collectorpb "github.com/solarwinds/apm-proto/go/collectorpb"
 
 	grpc "google.golang.org/grpc"
 
