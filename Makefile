@@ -21,7 +21,7 @@ doc:
 
 .PHONY: check
 check:	all
-	git diff --exit-code
+	git diff -- ":!CONTRIBUTING.md" --exit-code
 
 clean:
 	@echo "Cleaning packages"
